@@ -1,0 +1,16 @@
+PREFIX geosparql: <http://www.opengis.net/ont/geosparql#>
+PREFIX sro: <https://data.vlaanderen.be/ns/slimmeraadpleegomgeving#>
+PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX locn: <http://www.w3.org/ns/locn#>
+
+SELECT ?location ?locationLabel ?niveau ?address ?geometry ?wkt
+WHERE {
+  ?location a prov:Location .
+  OPTIONAL { ?location rdfs:label ?locationLabel . }
+  OPTIONAL { ?location ext:werkingsgebiedNiveau ?niveau . }
+  OPTIONAL { ?adminUnit besluit:werkingsgebied ?location . }
+  OPTIONAL { ?subject sro:heeftLocatie ?address . ?address a locn:Address ; locn:geometry ?geometry . ?geometry a locn:Geometry ; geosparql:asWKT ?wkt . }
+}

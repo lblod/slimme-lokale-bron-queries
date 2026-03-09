@@ -1,0 +1,12 @@
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>
+PREFIX lblodlg: <http://data.lblod.info/vocabularies/leidinggevenden/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT distinct ?label (count(distinct ?decision) AS ?numberOfDecisions)
+WHERE {
+  ?thema skos:topConceptOf <https://data.vlaanderen.be/id/conceptscheme/BesluitThema>; skos:prefLabel ?label.
+  ?decision dct:subject ?thema .
+}
+GROUP BY ?thema ?label
